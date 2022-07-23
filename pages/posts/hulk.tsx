@@ -6,7 +6,7 @@ import PostList from "@components/PostList";
 
 const Hulk: NextPage<IPosts> = ({ posts }: IPosts) => {
   return (
-    <div className="pt-[60px] pb-4">
+    <div className="mx-auto max-w-[1080px] pt-[60px] pb-4">
       <div className="mb-9 px-4">
         <div className="text-[32px] font-bold leading-[45px] text-black">
           👊 Hulk
