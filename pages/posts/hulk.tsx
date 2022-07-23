@@ -1,7 +1,7 @@
-import matter from "gray-matter";
 import { IPosts } from "@type/posts";
-import { readdirSync, readFileSync } from "fs";
 import { GetStaticProps, NextPage } from "next";
+import { readdirSync, readFileSync } from "fs";
+import matter from "gray-matter";
 import PostList from "@components/PostList";
 
 const Hulk: NextPage<IPosts> = ({ posts }: IPosts) => {

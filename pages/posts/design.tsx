@@ -1,8 +1,8 @@
-import PostList from "@components/PostList";
 import { IPosts } from "@type/posts";
+import { GetStaticProps, NextPage } from "next";
 import { readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
-import { GetStaticProps, NextPage } from "next";
+import PostList from "@components/PostList";
 
 const Tech: NextPage<IPosts> = ({ posts }: IPosts) => {
   return (

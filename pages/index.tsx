@@ -1,9 +1,9 @@
 import { IPosts } from "@type/posts";
-import CarouselSlide from "@components/CarouselSlide";
+import type { GetStaticProps, NextPage } from "next";
 import { readdirSync, readFileSync } from "fs";
 import matter from "gray-matter";
-import type { GetStaticProps, NextPage } from "next";
-import PostList from "../components/PostList"; // strange 고침 PostList => postList
+import PostList from "@components/PostList";
+import CarouselSlide from "@components/CarouselSlide";
 
 const Home: NextPage<IPosts> = ({ posts }: IPosts) => {
   return (

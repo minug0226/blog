@@ -1,11 +1,10 @@
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { readdirSync } from "fs";
+import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import Test from "@components/Test";
 import Paragraph from "@components/Paragraph";
-import { readdirSync } from "fs";
-import matter from "gray-matter";
-import React from "react";
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 
 interface IPostDetailProps {
   mdxContent: MDXRemoteSerializeResult<Record<string, unknown>>;
