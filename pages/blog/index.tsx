@@ -1,7 +1,7 @@
 import { IPosts } from "@type/posts";
-import { readdirSync, readFileSync } from "fs";
-import matter from "gray-matter";
 import type { GetStaticProps, NextPage } from "next";
+import matter from "gray-matter";
+import { readdirSync, readFileSync } from "fs";
 
 const Blog: NextPage<IPosts> = ({ posts }: IPosts) => {
   return (

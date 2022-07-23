@@ -1,4 +1,3 @@
-import { IHeaderProps } from "@type/common";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";

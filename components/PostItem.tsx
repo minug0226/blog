@@ -1,19 +1,7 @@
 import Link from "next/link";
+import { IPostItemProps } from "@type/posts";
 
-interface Post {
-  title: string;
-  content: string;
-  date: string;
-  author: string;
-  category: string;
-  thumbnail?: string;
-}
-
-interface PostItemProps {
-  post: Post;
-}
-
-const PostItem = ({ post }: PostItemProps) => {
+const PostItem = ({ post }: IPostItemProps) => {
   return (
     <div className="w-full">
       <div className="mb-3 aspect-thumbnail w-full bg-[#D9D9D9]">

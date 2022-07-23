@@ -7,6 +7,10 @@ interface IPost {
   thumbnail?: string;
 }
 
+export interface IPostItemProps {
+  post: IPost;
+}
+
 export interface IPosts {
   posts: IPost[];
 }
