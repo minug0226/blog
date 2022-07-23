@@ -87,7 +87,7 @@ const CarouselSlide = () => {
       <div
         ref={slideRef}
         onScroll={onScrollHandler}
-        className="no-scrollbar aspect-banner mb-8 flex snap-x snap-mandatory overflow-x-scroll pb-5"
+        className="no-scrollbar aspect-banner mb-8 flex snap-x snap-mandatory overflow-x-scroll"
       >
         {contentsList.map((project, id) => {
           return (
