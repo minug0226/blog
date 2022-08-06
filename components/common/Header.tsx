@@ -1,14 +1,27 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
+import { useRecoilState } from "recoil";
+import { globalNavAtom } from "states/common";
+import Drawer from "./Drawer";
 
 let logoHeight = 0;
 
 const Header = () => {
   const router = useRouter();
   const currentPath = router.pathname;
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const logoRef = useRef<HTMLDivElement>();
+
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const navList = [
+    { content: "홈", route: "/" },
+    { content: "디벤져스", route: "/" },
+    { content: "기술", route: "/tech" },
+    { content: "디자인", route: "/design" },
+    { content: "기타", route: "/etc" },
+  ];
+  const [globalNav, setGlobalNav] = useRecoilState(globalNavAtom);
 
   useEffect(() => {
     const onScroll = () => {
@@ -21,9 +34,17 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const navListClass = (item: string) => {
+    const defaultClass =
+      "flex flex-1 items-center justify-center text-lg cursor-pointer ";
+    if (item === globalNav) return defaultClass + "black60 font-bold";
+    else return defaultClass + "black20 font-normal";
+  };
 
   return (
     <>
+      <Drawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+
       <div className="hidden md:contents">
         <div ref={logoRef} className="pt-4 text-center">
           <Image
@@ -50,19 +71,18 @@ const Header = () => {
             )}
 
             <div className="flex flex-1">
-              <div className="flex flex-1 items-center justify-center">홈</div>
-              <div className="flex flex-1 items-center justify-center">
-                디벤져스
-              </div>
-              <div className="flex flex-1 items-center justify-center">
-                기술
-              </div>
-              <div className="flex flex-1 items-center justify-center">
-                디자인
-              </div>
-              <div className="flex flex-1 items-center justify-center">
-                기타
-              </div>
+              {navList.map((item, i) => (
+                <div
+                  key={i}
+                  className={navListClass(item.content)}
+                  onClick={() => {
+                    setGlobalNav(item.content);
+                    router.push(item.route);
+                  }}
+                >
+                  {item.content}
+                </div>
+              ))}
             </div>
 
             <div className="flex items-center">
@@ -89,7 +109,12 @@ const Header = () => {
       <div className="contents md:hidden">
         <div className="sticky top-0 mx-auto h-[60px] max-w-[1080px] bg-white bg-opacity-50">
           <div className="flex h-full items-center justify-between px-4">
-            <img src="/images/header/nav-icon.svg" alt="nav" />
+            <img
+              onClick={() => setDrawerOpen(true)}
+              src="/images/header/nav-icon.svg"
+              alt="nav"
+              className="cursor-pointer"
+            />
             <img src="/images/header/sm-logo.png" alt="sm-logo" />
             <img src="/images/header/sm-search-icon.svg" alt="search-icon" />
           </div>

@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.prose {
-  max-width: 100%;
-}
-
 @layer components {
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */

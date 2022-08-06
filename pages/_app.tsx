@@ -1,16 +1,18 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { RecoilRoot } from "recoil";
 import Header from "@components/common/Header";
 import Footer from "@components/common/Footer";
-import Drawer from "@components/common/Drawer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className="mx-auto w-full">
-      <Header />
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <Header />
+
+        <Component {...pageProps} />
+      </RecoilRoot>
       <Footer />
-      <Drawer />
     </div>
   );
 }
