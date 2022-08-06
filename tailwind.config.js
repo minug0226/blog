@@ -26,6 +26,6 @@ module.exports = {
         contents: "1080 / 617",
       },
     },
-    plugins: [require("@tailwindcss/typography")],
   },
+  plugins: [require("@tailwindcss/typography")],
 };
