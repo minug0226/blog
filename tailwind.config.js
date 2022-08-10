@@ -25,6 +25,20 @@ module.exports = {
         thumbnail: "344 / 250",
         contents: "1080 / 617",
       },
+      keyframes: {
+        drawerOpen: {
+          "0%": { opacity: 0, transform: "translateX(-50%)" },
+          "100%": { opacity: 1, transform: "translateX(0%)" },
+        },
+        drawerClose: {
+          "0%": { opacity: 1, transform: "translateX(0%)" },
+          "100%": { opacity: 0, transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        drawerOpen: "drawerOpen 500ms ease-in-out forwards",
+        drawerClose: "drawerClose 500ms ease-in-out forwards",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

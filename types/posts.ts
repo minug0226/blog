@@ -7,6 +7,7 @@ export interface IPost {
   slogan?: string;
   thumbnail?: string;
   tags?: string;
+  fileName: string;
 }
 
 export interface IPostItemProps {
