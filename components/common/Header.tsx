@@ -12,7 +12,9 @@ const Header = () => {
   const currentPath = router.pathname;
   const logoRef = useRef<HTMLDivElement>();
 
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState<"open" | "close" | "animate">(
+    "close"
+  );
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const navList = [
     { content: "홈", route: "/" },
@@ -22,6 +24,10 @@ const Header = () => {
     { content: "기타", route: "/etc" },
   ];
   const [globalNav, setGlobalNav] = useRecoilState(globalNavAtom);
+  const onMoveMainHandler = () => {
+    router.push("/");
+    setGlobalNav("홈");
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -48,6 +54,8 @@ const Header = () => {
       <div className="hidden md:contents">
         <div ref={logoRef} className="pt-4 text-center">
           <Image
+            onClick={onMoveMainHandler}
+            className="cursor-pointer"
             src="/images/header/team-logo.svg"
             alt="main-logo"
             width={157}
@@ -58,14 +66,16 @@ const Header = () => {
         <div className="sticky top-0 mx-auto h-[60px] max-w-[1080px] bg-white bg-opacity-50 px-4">
           <div className="flex justify-between">
             {isScrolled ? (
-              <>
+              <div className="cursor-pointer">
                 <Image
+                  onClick={onMoveMainHandler}
+                  className="cursor-pointer"
                   src="/images/header/team-logo.svg"
                   alt="main-logo"
                   width={118}
                   height={42}
                 />
-              </>
+              </div>
             ) : (
               <div className="h-[52px] w-[52px]"></div>
             )}
@@ -110,12 +120,17 @@ const Header = () => {
         <div className="sticky top-0 mx-auto h-[60px] max-w-[1080px] bg-white bg-opacity-50">
           <div className="flex h-full items-center justify-between px-4">
             <img
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => setDrawerOpen("open")}
               src="/images/header/nav-icon.svg"
               alt="nav"
               className="cursor-pointer"
             />
-            <img src="/images/header/sm-logo.png" alt="sm-logo" />
+            <img
+              onClick={onMoveMainHandler}
+              className="cursor-pointer"
+              src="/images/header/sm-logo.png"
+              alt="sm-logo"
+            />
             <img src="/images/header/sm-search-icon.svg" alt="search-icon" />
           </div>
         </div>

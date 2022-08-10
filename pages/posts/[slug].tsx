@@ -27,11 +27,11 @@ const PostDetail: NextPage<IPostDetailProps> = ({
     <>
       <PostTopSection data={data} />
       <div className="mx-auto mb-12 max-w-[1080px] px-4 md:px-0">
-        <div className="prose">
+        <div className="prose max-w-none">
           <MDXRemote {...mdxContent} components={components} />
         </div>
       </div>
-      <PostBottomSection />
+      <PostBottomSection data={data} />
     </>
   );
 };

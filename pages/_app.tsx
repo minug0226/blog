@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div className="mx-auto w-full">
       <RecoilRoot>
         <Header />
-
         <Component {...pageProps} />
       </RecoilRoot>
       <Footer />

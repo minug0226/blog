@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { globalNavAtom } from "states/common";
 
 interface IDrawerProps {
-  drawerOpen: boolean;
-  setDrawerOpen: Dispatch<SetStateAction<boolean>>;
+  drawerOpen: "open" | "close" | "animate";
+  setDrawerOpen: Dispatch<SetStateAction<"open" | "close" | "animate">>;
 }
 
 const Drawer = ({ drawerOpen, setDrawerOpen }: IDrawerProps) => {
@@ -20,45 +20,80 @@ const Drawer = ({ drawerOpen, setDrawerOpen }: IDrawerProps) => {
   const [globalNav, setGlobalNav] = useRecoilState(globalNavAtom);
 
   const drawerClass = () => {
-    if (!drawerOpen) {
+    const defaultClass =
+      "fixed top-0 left-0 z-[100] min-h-[100vh] w-[70%] bg-white pl-[51px] pt-[54px] pr-6 md:hidden ";
+    if (drawerOpen === "close") {
       return "hidden";
+    } else if (drawerOpen === "animate") {
+      return defaultClass + "animate-drawerClose";
     } else {
-      return "absolute top-0 left-0 z-[100] h-full w-[70%] bg-white pl-[51px] pt-[54px] pr-6 md:hidden";
+      return defaultClass + "animate-drawerOpen";
     }
   };
 
   const navListClass = (item: string) => {
     const defaultClass =
       "px-[10px] py-[10px] text-lg leading-[42px] cursor-pointer ";
-    if (item === globalNav) return defaultClass + "black60 font-bold";
-    else return defaultClass + "black20 font-normal";
+    if (item === globalNav) return defaultClass + "text-black60 font-bold";
+    else return defaultClass + "text-black20 font-normal";
   };
 
-  return (
-    <div className={drawerClass()}>
-      <div className="mb-8 flex justify-end">
-        <img
-          className="cursor-pointer"
-          onClick={() => setDrawerOpen(false)}
-          src="/images/drawer/close-button.svg"
-          alt="close-button"
-        />
-      </div>
+  const onCloseDrawerHandler = () => {
+    setDrawerOpen("animate");
+    setTimeout(() => {
+      setDrawerOpen("close");
+    }, 500);
+  };
 
-      {navList.map((item, i) => (
+  useEffect(() => {
+    if (drawerOpen === "open") {
+      document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+      return () => {
+        const scrollY = document.body.style.top;
+        document.body.style.cssText = "";
+        window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+      };
+    }
+  }, [drawerOpen]);
+
+  return (
+    <>
+      {drawerOpen === "open" && (
         <div
-          onClick={() => {
-            setGlobalNav(item.content);
-            router.push(item.route);
-            setDrawerOpen(false);
-          }}
-          key={i}
-          className={navListClass(item.content)}
-        >
-          {item.content}
+          onClick={onCloseDrawerHandler}
+          className="fixed top-0 left-0 z-[80] min-h-[100vh] w-full bg-[rgba(48,48,48)] bg-opacity-50"
+        />
+      )}
+
+      <div className={drawerClass()}>
+        <div className="mb-8 flex justify-end">
+          <img
+            className="cursor-pointer"
+            onClick={onCloseDrawerHandler}
+            src="/images/drawer/close-button.svg"
+            alt="close-button"
+          />
         </div>
-      ))}
-    </div>
+
+        {navList.map((item, i) => (
+          <div
+            onClick={() => {
+              setGlobalNav(item.content);
+              router.push(item.route);
+              onCloseDrawerHandler();
+            }}
+            key={i}
+            className={navListClass(item.content)}
+          >
+            {item.content}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
