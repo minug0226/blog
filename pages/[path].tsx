@@ -68,10 +68,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     context?.params?.path === "spiderman"
   ) {
     const postList = readdirSync("./posts").map((fileName) => {
+      const file = fileName.replace(".mdx", "");
       const fileInfo = readFileSync(`./posts/${fileName}`, "utf-8");
       const { data } = matter(fileInfo);
 
-      if (data.author === context?.params?.path) return data;
+      if (data.author === context?.params?.path)
+        return { ...data, fileName: file };
       else return null;
     });
 
@@ -85,10 +87,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   } else {
     const postList = readdirSync("./posts").map((fileName) => {
+      const file = fileName.replace(".mdx", "");
       const fileInfo = readFileSync(`./posts/${fileName}`, "utf-8");
       const { data } = matter(fileInfo);
 
-      if (data.category === context?.params?.path) return data;
+      if (data.category === context?.params?.path)
+        return { ...data, fileName: file };
       else return null;
     });
 

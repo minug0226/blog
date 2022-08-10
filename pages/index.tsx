@@ -20,10 +20,11 @@ const Home: NextPage<IPosts> = ({ posts }: IPosts) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = readdirSync("./posts").map((fileName) => {
+    const file = fileName.replace(".mdx", "");
     const info = readFileSync(`./posts/${fileName}`, "utf-8");
 
     const { data } = matter(info);
-    return data;
+    return { ...data, fileName: file };
   });
 
   return {
